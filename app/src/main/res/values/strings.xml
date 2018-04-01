@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Программа тренировок</string>
+
+    <string name="workout_type_fragment_title">Выберите тип упражнения</string>
+    <string name="day_type">(Тяжелый день)</string>
+    <string name="bench_press">Жим лежа</string>
+    <string name="enter_current_working_weight">Введите текущий рабочий вес\n(в лучшем подходе на 8 повторений)\nв упражнении:</string>
+    <string name="enter_weight_hint">Введите вес</string>
+    <string name="make_program">Составить программу</string>
+    <string name="week">Неделя</string>
+    <string name="weight">Вес</string>
+    <string name="repetitions_number">Количество повторений</string>
+    <string name="approaches_number">Количество подходов</string>
+</resources>

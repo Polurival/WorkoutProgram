@@ -11,7 +11,9 @@ import com.github.polurival.workoutprogram.R
 
 
 /**
- * todo программа должна начинаться с этого фрагмента
+ * todo программа должна начинаться с этого фрагмента, но пока есть только одно упражнение, в этом нет смысла
+ *
+ * Здесь происходит выбор базового упражнения, для которого необходимо составить программуу
  *
  */
 class WorkoutTypeFragment : Fragment() {
@@ -20,6 +22,4 @@ class WorkoutTypeFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_workout_type, container, false)
     }
-
-
 }

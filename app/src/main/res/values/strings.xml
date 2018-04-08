@@ -5,6 +5,8 @@
     <string name="workout_type_fragment_title">Выберите тип упражнения</string>
     <string name="day_type">(Тяжелый день)</string>
     <string name="bench_press">Жим лежа</string>
+    <string name="bench_angle_press">Жим под углом</string>
+    <string name="bench_narrow_press">Жим узким хватом</string>
     <string name="enter_current_working_weight">Введите текущий рабочий вес\n(в лучшем подходе на 8 повторений)\nв упражнении:</string>
     <string name="enter_weight_hint">Введите вес</string>
     <string name="make_program">Составить программу</string>
@@ -12,4 +14,7 @@
     <string name="weight">Вес</string>
     <string name="repetitions_number">Количество повторений</string>
     <string name="approaches_number">Количество подходов</string>
+
+    <string name="monday">Понедельник</string>
+    <string name="friday">Пятница</string>
 </resources>

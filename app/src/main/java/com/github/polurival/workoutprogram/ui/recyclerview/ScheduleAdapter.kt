@@ -4,9 +4,9 @@ package com.github.polurival.workoutprogram.ui.recyclerview
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.github.polurival.workoutprogram.R
+import com.github.polurival.workoutprogram.ui.recyclerview.RowType.*
 
 /**
  * https://www.raywenderlich.com/172711/intermediate-recyclerview
@@ -17,13 +17,17 @@ class ScheduleAdapter(private var scheduleList: ArrayList<ScheduleRow>) : Recycl
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DefaultViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val inflatedView: View = when (viewType) {
-            RowType.HEADER.ordinal -> layoutInflater.inflate(R.layout.schedule_header_item, parent, false)
-            RowType.ROW.ordinal -> layoutInflater.inflate(R.layout.schedule_row_item, parent, false) as ViewGroup
+        val layoutId = when (viewType) {
+        // todo сделать разные лэйауты
+            DIVIDER.ordinal -> R.layout.schedule_divider_item
+            DAY.ordinal -> R.layout.schedule_header_item
+            HEADER.ordinal -> R.layout.schedule_header_item
+            HEADER_ROW.ordinal -> R.layout.schedule_header_item
+            ROW.ordinal -> R.layout.schedule_row_item
             else -> throw IllegalArgumentException("Wrong type of ViewHolder")
         }
-        inflatedView.layoutParams
-        return DefaultViewHolder(inflatedView)
+        val rowView = layoutInflater.inflate(layoutId, parent, false)
+        return DefaultViewHolder(rowView)
     }
 
     override fun getItemCount(): Int {
@@ -34,13 +38,18 @@ class ScheduleAdapter(private var scheduleList: ArrayList<ScheduleRow>) : Recycl
         val scheduleRow = scheduleList[position]
         val workOutModel = scheduleRow.schedule
 
-        if (scheduleRow.type == RowType.HEADER) {
-            workOutModel.workoutName?.let { holder.setText(R.id.workout_name_text_view, it) }
-        } else if (scheduleRow.type == RowType.ROW) {
-            workOutModel.weekNumber?.let { holder.setText(R.id.week_text_view, it) }
-            workOutModel.weight?.let { holder.setText(R.id.weight_text_view, it) }
-            workOutModel.repetitionsNumber?.let { holder.setText(R.id.repetitions_number_text_view, it) }
-            workOutModel.approachesNumber?.let { holder.setText(R.id.approaches_number_text_view, it) }
+        when (scheduleRow.type) {
+            DAY, HEADER, HEADER_ROW -> {
+                workOutModel.workoutName?.let { holder.setText(R.id.workout_name_text_view, it) }
+            }
+            ROW -> {
+                workOutModel.weekNumber?.let { holder.setText(R.id.week_text_view, it) }
+                workOutModel.weight?.let { holder.setText(R.id.weight_text_view, it) }
+                workOutModel.repetitionsNumber?.let { holder.setText(R.id.repetitions_number_text_view, it) }
+                workOutModel.approachesNumber?.let { holder.setText(R.id.approaches_number_text_view, it) }
+            }
+            DIVIDER -> {
+            }
         }
     }
 

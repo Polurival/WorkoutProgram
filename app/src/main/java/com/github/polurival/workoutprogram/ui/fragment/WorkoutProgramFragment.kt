@@ -7,12 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.polurival.workoutprogram.R
-import com.github.polurival.workoutprogram.model.WorkoutModel
-import com.github.polurival.workoutprogram.model.WorkoutScheduler
-import com.github.polurival.workoutprogram.ui.recyclerview.AdapterModel
-import com.github.polurival.workoutprogram.ui.recyclerview.RowType
+import com.github.polurival.workoutprogram.model.factory.WorkoutType
+import com.github.polurival.workoutprogram.model.factory.WorkoutFactory
 import com.github.polurival.workoutprogram.ui.recyclerview.ScheduleAdapter
-import com.github.polurival.workoutprogram.ui.recyclerview.ScheduleRow
 import kotlinx.android.synthetic.main.fragment_workout_program.*
 
 
@@ -24,8 +21,8 @@ private const val ENTERED_WEIGHT = "entered_weight"
  */
 class WorkoutProgramFragment : Fragment() {
 
-    private var workoutType: String = ""
-    private var enteredWeight: Double = 0.0
+    private lateinit var workoutType: String
+    private lateinit var enteredWeight: String
 
     companion object {
         fun newInstance(workoutType: String, enteredWeight: String): WorkoutProgramFragment {
@@ -44,43 +41,19 @@ class WorkoutProgramFragment : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
         workoutType = arguments?.getString(WORKOUT_TYPE)!!
-        enteredWeight = (arguments?.getString(ENTERED_WEIGHT))!!.toDouble()
-        val workoutSchedule = WorkoutScheduler().calculateProgram(enteredWeight)
-        val allRows = prepareItems(workoutSchedule)
+        enteredWeight = (arguments?.getString(ENTERED_WEIGHT))!!
+
+        val workoutFactory = WorkoutFactory(WorkoutType.valueOf(workoutType), enteredWeight)
+        val allWorkout = workoutFactory.allWorkout()
 
         if (schedule_recycler_view.adapter == null) {
-            val adapter = ScheduleAdapter(allRows)
+            val adapter = ScheduleAdapter(allWorkout)
             schedule_recycler_view.adapter = adapter
         } else {
-            (schedule_recycler_view.adapter as ScheduleAdapter).updateSchedule(allRows)
+            (schedule_recycler_view.adapter as ScheduleAdapter).updateSchedule(allWorkout)
         }
-
-        super.onActivityCreated(savedInstanceState)
-    }
-
-    /**
-     * todo вынести это в фабрику
-     */
-    private fun prepareItems(workoutSchedule: ArrayList<WorkoutModel>): ArrayList<ScheduleRow> {
-        val allRows = ArrayList<ScheduleRow>()
-
-        val workoutNameRow = ScheduleRow(RowType.HEADER, AdapterModel("$workoutType ${getString(R.string.day_type)}"))
-        allRows.add(workoutNameRow)
-        val workoutColumnNamesRow = ScheduleRow(RowType.ROW,
-                AdapterModel(null, getString(R.string.week), getString(R.string.weight),
-                        getString(R.string.repetitions_number), getString(R.string.approaches_number)))
-        allRows.add(workoutColumnNamesRow)
-
-        for (week in workoutSchedule) {
-            val weekRow = ScheduleRow(RowType.ROW, AdapterModel(null,
-                    week.weekNumber.toString(),
-                    week.weight.toString(),
-                    week.repetitionsNumber.toString(),
-                    week.approachesNumber.toString()))
-            allRows.add(weekRow)
-        }
-
-        return allRows
     }
 }

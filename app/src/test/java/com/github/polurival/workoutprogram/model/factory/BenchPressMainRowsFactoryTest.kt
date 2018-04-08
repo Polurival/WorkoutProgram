@@ -1,19 +1,21 @@
-package com.github.polurival.workoutprogram.model
+package com.github.polurival.workoutprogram.model.factory
 
+import com.github.polurival.workoutprogram.model.factory.benchpress.BenchPressMainRowsFactory
 import org.hamcrest.core.Is.`is`
 import org.junit.Assert.assertThat
 import org.junit.Test
 
-/**
- * @author Polurival on 01.04.2018.
- */
-class WorkoutSchedulerTest {
 
-    val scheduler: WorkoutScheduler = WorkoutScheduler()
+/**
+ * @author Polurival on 08.04.2018.
+ */
+class BenchPressMainRowsFactoryTest {
+
+    val factory = BenchPressMainRowsFactory("75.0")
 
     @Test
-    fun checkStandardProgram() {
-        val workoutSchedule = scheduler.calculateProgram(75.0)
+    fun calculate() {
+        val workoutSchedule = factory.calculate()
 
         val (workoutName6, weekNumber6, weight6, numberOfRepetitions6, numberOfApproaches6) = workoutSchedule[5]
         assertThat(weekNumber6, `is`(6))

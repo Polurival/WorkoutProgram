@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.polurival.workoutprogram.R
+import com.github.polurival.workoutprogram.model.factory.WorkoutType
 import com.github.polurival.workoutprogram.replaceFragment
 import com.github.polurival.workoutprogram.ui.filter.WeightInputFilter
 import kotlinx.android.synthetic.main.fragment_current_working_weight.*
@@ -38,14 +39,14 @@ class CurrentWorkingWeightFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val workoutType = arguments?.getString(WORKOUT_TYPE)
+        val workoutType = arguments?.getString(WORKOUT_TYPE)!!
 
         enter_weight_edit_text.filters = arrayOf(WeightInputFilter())
-        workout_type_text_view.text = workoutType
+        workout_type_text_view.text = getString(WorkoutType.valueOf(workoutType).nameIdResource)
 
         make_program_button.setOnClickListener({
             val enteredWeight = enter_weight_edit_text.text.toString()
-            activity?.replaceFragment(R.id.root_container, WorkoutProgramFragment.newInstance(workoutType!!, enteredWeight))
+            activity?.replaceFragment(R.id.root_container, WorkoutProgramFragment.newInstance(workoutType, enteredWeight))
         })
     }
 }

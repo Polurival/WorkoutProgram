@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.github.polurival.workoutprogram.R
 import com.github.polurival.workoutprogram.addFragment
+import com.github.polurival.workoutprogram.model.factory.WorkoutType
 import com.github.polurival.workoutprogram.ui.fragment.CurrentWorkingWeightFragment
 
 class MainActivity : AppCompatActivity() {
@@ -13,8 +14,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            addFragment(R.id.root_container,
-                    CurrentWorkingWeightFragment.newInstance(getString(R.string.bench_press)))
+            // todo здесь добавлять фрагмент WorkoutTypeFragment и о туда уже стартовать CurrentWorkingWeightFragment
+            val workoutName = WorkoutType.BENCH_PRESS.name
+            addFragment(R.id.root_container, CurrentWorkingWeightFragment.newInstance(workoutName))
             // only bench press for now
         }
     }

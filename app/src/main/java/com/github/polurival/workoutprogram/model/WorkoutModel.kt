@@ -7,4 +7,4 @@ data class WorkoutModel(val workoutName: String?,
                         val weekNumber: Int,
                         val weight: Double,
                         val repetitionsNumber: Int,
-                        val approachesNumber: Int = 3)
+                        val approachesNumber: Int = 3) : RowModel
